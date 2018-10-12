@@ -1,0 +1,9 @@
+-Iinclude
+-I../include
+-I../../include
+-I../../../include
+-I../../../../include
+-isystemexternal/Catch2/single_include
+-isystem../external/Catch2/single_include
+-isystem../../external/Catch2/single_include
+-std=c++14
