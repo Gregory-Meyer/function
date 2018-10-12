@@ -37,57 +37,57 @@
 #include <catch2/catch.hpp>
 
 SCENARIO("fn::Function", "[fn][fn/function.hpp][fn::Function]") {
-	GIVEN("a Function created from a lambda expression") {
-		const fn::Function<int(int)> foo{ [](int x) { return x * 2; } };
+    GIVEN("a Function created from a lambda expression") {
+        const fn::Function<int(int)> foo{ [](int x) { return x * 2; } };
 
-		WHEN("invoked") {
-			const int result = foo(15);
+        WHEN("invoked") {
+            const int result = foo(15);
 
-			THEN("the result is as expected") {
-				REQUIRE(result == 30);
-			}
-		}
-	}
+            THEN("the result is as expected") {
+                REQUIRE(result == 30);
+            }
+        }
+    }
 
-	GIVEN("a Function created from a value capturing lambda expression") {
-		int x = 15;
-		const fn::Function<int(int)> foo{ [x](int y) { return x * y; } };
+    GIVEN("a Function created from a value capturing lambda expression") {
+        int x = 15;
+        const fn::Function<int(int)> foo{ [x](int y) { return x * y; } };
 
-		WHEN("invoked") {
-			const int result = foo(15);
+        WHEN("invoked") {
+            const int result = foo(15);
 
-			THEN("the result is as expected") {
-				REQUIRE(result == x * 15);
-			}
-		}
-	}
+            THEN("the result is as expected") {
+                REQUIRE(result == x * 15);
+            }
+        }
+    }
 
-	GIVEN("a Function created from a reference capturing lambda expression") {
-		int x = 15;
-		const fn::Function<int&()> foo{ [&x]() -> int& { return x; } };
+    GIVEN("a Function created from a reference capturing lambda expression") {
+        int x = 15;
+        const fn::Function<int&()> foo{ [&x]() -> int& { return x; } };
 
-		WHEN("invoked") {
-			THEN("the result is as expected") {
-				REQUIRE(&foo() == &x);
-			}
-		}
-	}
+        WHEN("invoked") {
+            THEN("the result is as expected") {
+                REQUIRE(&foo() == &x);
+            }
+        }
+    }
 
-	GIVEN("a Function created from a value capturing complex lambda") {
-		std::string first = "foo bar";
-		std::string second = "baz qux";
-		const fn::Function<std::string()> foo{
-			[first = std::move(first), second = std::move(second)] {
-				return first + second;
-			}
-		};
+    GIVEN("a Function created from a value capturing complex lambda") {
+        std::string first = "foo bar";
+        std::string second = "baz qux";
+        const fn::Function<std::string()> foo{
+            [first = std::move(first), second = std::move(second)] {
+                return first + second;
+            }
+        };
 
-		WHEN("invoked") {
-			const auto result = foo();
+        WHEN("invoked") {
+            const auto result = foo();
 
-			THEN("the result is as expected") {
-				REQUIRE(result == "foo barbaz qux");
-			}
-		}
-	}
+            THEN("the result is as expected") {
+                REQUIRE(result == "foo barbaz qux");
+            }
+        }
+    }
 }
